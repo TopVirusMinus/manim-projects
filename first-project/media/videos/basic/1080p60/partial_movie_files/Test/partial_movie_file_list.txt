@@ -1,0 +1,6 @@
+# This file is used internally by FFMPEG.
+file 'file:D:/Projects/Programming/manim/first-project/media/videos/basic/1080p60/partial_movie_files/Test/450974505_1097194621_223132457.mp4'
+file 'file:D:/Projects/Programming/manim/first-project/media/videos/basic/1080p60/partial_movie_files/Test/34786186_4280253418_1123673759.mp4'
+file 'file:D:/Projects/Programming/manim/first-project/media/videos/basic/1080p60/partial_movie_files/Test/34786186_4214161424_84861931.mp4'
+file 'file:D:/Projects/Programming/manim/first-project/media/videos/basic/1080p60/partial_movie_files/Test/34786186_7578647_3738336652.mp4'
+file 'file:D:/Projects/Programming/manim/first-project/media/videos/basic/1080p60/partial_movie_files/Test/34786186_329969645_2324440798.mp4'
