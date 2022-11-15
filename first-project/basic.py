@@ -32,3 +32,12 @@ class BoxWithInfo(Scene):
         self.play(Create(VGroup(eq, rect, name)))
         self.play(eq.animate.shift(RIGHT * 2), run_time=2)
         self.wait()
+        
+class ValueTrackers(Scene):
+    def construct(self):
+        n = ValueTracker(3.5)
+        num = always_redraw(lambda:DecimalNumber().set_value(n.get_value()))
+        
+        self.play(FadeIn(num))
+        self.play(n.animate.set_value(0), run_time=3, rate_func=smooth)
+        self.wait()
