@@ -44,18 +44,45 @@ class ValueTrackers(Scene):
         
 class Graphing(Scene):
     def construct(self):
-        plane = (
-            NumberPlane(x_range = [-10,10, 2], x_length=8, y_range=[0,16,2], y_length=5)
-            .add_coordinates()
+            plane = (
+                NumberPlane(x_range = [-10,10, 2], x_length=8, y_range=[0,16,2], y_length=5)
+                .add_coordinates()
+                .to_edge(DOWN)
+            )
+            
+            labels = plane.get_axis_labels(x_label="X", y_label="f(x)")
+            parab = plane.plot(lambda x : x**2, x_range=[-4, 4], color=GREEN)
+            func_label = MathTex("f(x)={x}^{2}").scale(0.6).next_to(parab,UR, buff=0.5).set_color(GREEN)
+            area = plane.get_riemann_rectangles(graph=parab, x_range=[-4,4], dx=0.2, stroke_width=0.1, stroke_color=WHITE)
+            
+            self.play(DrawBorderThenFill(plane), rate_func=linear)
+            self.play(Create(VGroup(labels, parab, func_label)), run_time=3)
+            self.play(Create(area), run_time=5)
+            self.wait()
+        
+class UpdaterGraphing(Scene):
+    def construct(self):
+        n = ValueTracker(-4)
+        ax = (
+            Axes(x_range = [-4,4, 2], x_length=10, y_range=[-2,16,2], y_length=6).to_edge(DOWN)
             .to_edge(DOWN)
+            .add_coordinates()
+            )
+            
+        parab = ax.plot(lambda x:x**2, x_range=[-4,4], color=BLUE)
+        slope = always_redraw(lambda: ax.get_secant_slope_group(
+            x=n.get_value(), graph=parab, dx=0.01, secant_line_length=3, secant_line_color=GREEN
+            )
         )
         
-        labels = plane.get_axis_labels(x_label="X", y_label="f(x)")
-        parab = plane.plot(lambda x : x**2, x_range=[-4, 4], color=GREEN)
-        func_label = MathTex("f(x)={x}^{2}").scale(0.6).next_to(parab,UR, buff=0.5).set_color(GREEN)
-        area = plane.get_riemann_rectangles(graph=parab, x_range=[-4,4], dx=0.2, stroke_width=0.1, stroke_color=WHITE)
+        pt =  always_redraw(
+            lambda: Dot().move_to(
+                ax.c2p(n.get_value(), parab.underlying_function(n.get_value()))
+            ) 
+        )
         
-        self.play(DrawBorderThenFill(plane), rate_func=linear)
-        self.play(Create(VGroup(labels, parab, func_label)), run_time=3)
-        self.play(Create(area), run_time=5)
+        self.add(ax, parab,slope, pt)
+        #self.play(Create(VGroup(ax, parab, slope)), run_time=5)
+        self.play(n.animate.set_value(4), run_time=5)
         self.wait()
+        
