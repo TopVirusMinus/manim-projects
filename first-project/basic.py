@@ -22,3 +22,13 @@ class Arrows(Scene):
         self.play(Create(VGroup(rect, circ,arrow)))
         self.wait()
         self.play(rect.animate.to_edge(UR), run_time=1.5)
+        
+class BoxWithInfo(Scene):
+    def construct(self):
+        eq = MathTex("ln(2)")
+        rect = always_redraw(lambda: SurroundingRectangle(eq, color=BLUE, fill_opacity=0.4,fill_color=RED, buff=2))
+        name = always_redraw(lambda:Tex("Marzouk").next_to(rect, DOWN, buff=0.25))
+        
+        self.play(Create(VGroup(eq, rect, name)))
+        self.play(eq.animate.shift(RIGHT * 2), run_time=2)
+        self.wait()
